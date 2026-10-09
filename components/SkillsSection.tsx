@@ -85,12 +85,8 @@ export default function SkillsSection() {
           const strokeOffset = circumference - (skill.pct / 100) * circumference;
 
           return (
-            <motion.div
+            <div
               key={skill.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: idx * 0.08 }}
               className="p-6 rounded-xl border border-[var(--card-border)] bg-[var(--card-bg)]/80 backdrop-blur-md flex flex-col items-center text-center relative overflow-hidden group hover:border-[var(--accent)] transition-all duration-300 shadow-lg"
             >
               {/* Circular SVG Ring */}
@@ -144,7 +140,7 @@ export default function SkillsSection() {
                   </span>
                 ))}
               </div>
-            </motion.div>
+            </div>
           );
         })}
       </div>

@@ -69,13 +69,7 @@ export default function GitHubStats() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Profile Card */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="lg:col-span-5 p-8 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)]/90 backdrop-blur-md shadow-xl flex flex-col items-center text-center relative overflow-hidden"
-        >
+        <div className="lg:col-span-5 p-8 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)]/90 backdrop-blur-md shadow-xl flex flex-col items-center text-center relative overflow-hidden">
           {/* Subtle glow */}
           <div className="absolute -top-12 -left-12 w-48 h-48 bg-[var(--accent)] opacity-10 blur-3xl pointer-events-none" />
 
@@ -144,16 +138,10 @@ export default function GitHubStats() {
             <GithubIcon className="w-4 h-4" />
             <span>Follow on GitHub</span>
           </a>
-        </motion.div>
+        </div>
 
         {/* Stats Cards Stream */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="lg:col-span-7 flex flex-col gap-6"
-        >
+        <div className="lg:col-span-7 flex flex-col gap-6">
           {/* Main Stats Card */}
           <div className="p-4 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)]/80 backdrop-blur-md overflow-hidden flex items-center justify-center">
             <img
@@ -184,7 +172,7 @@ export default function GitHubStats() {
               />
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

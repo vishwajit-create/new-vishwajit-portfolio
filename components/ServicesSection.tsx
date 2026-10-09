@@ -96,16 +96,12 @@ export default function ServicesSection() {
         </div>
       </div>
 
-      {/* Services Grid - Fully Visible on Scroll/Visit */}
-      <div className="grid grid-cols-1 gap-12">
-        {SERVICES.map((item, idx) => (
-          <motion.div
+      {/* Services Grid - Fully Visible Immediately Without Any Tapping */}
+      <div className="grid grid-cols-1 gap-10">
+        {SERVICES.map((item) => (
+          <div
             key={item.id}
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.6, delay: idx * 0.1 }}
-            className="group p-6 md:p-10 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)]/80 backdrop-blur-md hover:border-[var(--accent)] transition-all duration-500 shadow-xl relative overflow-hidden"
+            className="group p-6 md:p-10 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)]/80 backdrop-blur-md hover:border-[var(--accent)] transition-all duration-300 shadow-xl relative overflow-hidden"
           >
             {/* Header row inside card */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-[var(--card-border)] gap-4">
@@ -173,7 +169,7 @@ export default function ServicesSection() {
                 {item.id === "api" && <APIServiceThumbnail />}
               </div>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
     </section>

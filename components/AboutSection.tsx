@@ -8,13 +8,7 @@ export default function AboutSection() {
     <section id="about" className="py-28 px-6 md:px-12 max-w-7xl mx-auto relative z-10">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         {/* Left Column Text */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="lg:col-span-7 order-2 lg:order-1"
-        >
+        <div className="lg:col-span-7 order-2 lg:order-1">
           <div className="flex items-center gap-3 mb-6">
             <span className="h-px w-10 bg-[var(--accent)]" />
             <span className="font-mono text-xs uppercase tracking-widest text-[var(--accent)]">
@@ -100,16 +94,10 @@ export default function AboutSection() {
               </p>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Right Column Brutalist Image Frame */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="lg:col-span-5 order-1 lg:order-2 flex justify-center"
-        >
+        <div className="lg:col-span-5 order-1 lg:order-2 flex justify-center">
           <div className="relative w-64 sm:w-80 aspect-[4/5] group">
             {/* Offset Brutalist Border */}
             <div className="absolute inset-0 border border-[var(--foreground)]/25 translate-x-4 translate-y-4 transition-transform duration-500 group-hover:translate-x-2 group-hover:translate-y-2 rounded-lg" />
@@ -133,7 +121,7 @@ export default function AboutSection() {
               </p>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
