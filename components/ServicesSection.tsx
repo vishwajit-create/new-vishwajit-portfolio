@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowUpRight, ExternalLink } from "lucide-react";
 import {
   FullStackServiceThumbnail,
   PythonBotsServiceThumbnail,
@@ -17,6 +16,9 @@ interface ServiceItem {
   subtitle: string;
   description: string;
   skills: string[];
+  link: string;
+  linkText: string;
+  isExternal?: boolean;
 }
 
 const SERVICES: ServiceItem[] = [
@@ -28,6 +30,9 @@ const SERVICES: ServiceItem[] = [
     description:
       "Engineering modern, performant web platforms with seamless user experiences, solid architecture, and clean responsive interfaces.",
     skills: ["Next.js", "TypeScript", "Tailwind CSS", "REST APIs", "Vercel"],
+    link: "https://hairsalonapp-puce.vercel.app",
+    linkText: "Visit Live Project",
+    isExternal: true,
   },
   {
     id: "bots",
@@ -37,6 +42,9 @@ const SERVICES: ServiceItem[] = [
     description:
       "Developing resilient Python automation bots—including uptime monitors to prevent cold starts on Render/Railway, data collectors, and background workers.",
     skills: ["Python", "AsyncIO", "Automation", "Webhooks", "Cloud Deployment"],
+    link: "https://github.com/vishwajit-create/monitor-website",
+    linkText: "Visit Bot Code",
+    isExternal: true,
   },
   {
     id: "database",
@@ -46,6 +54,9 @@ const SERVICES: ServiceItem[] = [
     description:
       "Designing clean relational database schemas, writing optimized queries, managing migrations, and integrating reliable data access layers.",
     skills: ["PostgreSQL", "MySQL", "SQLite", "Database Modeling", "Query Tuning"],
+    link: "#work",
+    linkText: "Explore Database Systems",
+    isExternal: false,
   },
   {
     id: "api",
@@ -55,12 +66,13 @@ const SERVICES: ServiceItem[] = [
     description:
       "Crafting secure, modular backend services with Node.js and Express, implementing authentication, webhooks, and third-party integrations.",
     skills: ["Node.js", "Express", "RESTful Architecture", "JSON APIs", "Git"],
+    link: "https://github.com/vishwajit-create/kshitij-sonal-website",
+    linkText: "Visit Backend Repo",
+    isExternal: true,
   },
 ];
 
 export default function ServicesSection() {
-  const [activeId, setActiveId] = useState<string | null>("web");
-
   return (
     <section id="services" className="py-28 px-6 md:px-12 max-w-7xl mx-auto relative z-10">
       {/* Header */}
@@ -78,98 +90,91 @@ export default function ServicesSection() {
           <p className="text-xs md:text-sm text-[var(--foreground)] opacity-60 uppercase tracking-widest">
             // What I build &amp; engineer
           </p>
-          <p className="text-[11px] text-[var(--foreground)] opacity-40 mt-1">
-            [Click to expand details]
+          <p className="text-[11px] text-[var(--accent)] opacity-80 mt-1">
+            [Live Previews &amp; Direct Visit Links]
           </p>
         </div>
       </div>
 
-      {/* Accordion / List */}
-      <div className="flex flex-col">
-        {SERVICES.map((item) => {
-          const isOpen = activeId === item.id;
+      {/* Services Grid - Fully Visible on Scroll/Visit */}
+      <div className="grid grid-cols-1 gap-12">
+        {SERVICES.map((item, idx) => (
+          <motion.div
+            key={item.id}
+            initial={{ opacity: 0, y: 35 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, delay: idx * 0.1 }}
+            className="group p-6 md:p-10 rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)]/80 backdrop-blur-md hover:border-[var(--accent)] transition-all duration-500 shadow-xl relative overflow-hidden"
+          >
+            {/* Header row inside card */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-[var(--card-border)] gap-4">
+              <div className="flex items-baseline gap-4 md:gap-6">
+                <span className="font-mono text-base md:text-xl font-bold text-[var(--accent)]">
+                  ({item.number})
+                </span>
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tight text-[var(--foreground)] group-hover:text-[var(--accent)] transition-colors">
+                  {item.title}
+                </h3>
+              </div>
 
-          return (
-            <div
-              key={item.id}
-              className="border-b border-[var(--card-border)] last:border-b-2 last:border-[var(--foreground)]"
-            >
-              <div
-                onClick={() => setActiveId(isOpen ? null : item.id)}
-                className="group py-8 md:py-12 cursor-pointer flex flex-col transition-all duration-300"
-              >
-                <div className="flex items-center justify-between w-full">
-                  <div className="flex items-baseline gap-6 md:gap-12">
-                    <span className="font-mono text-xs md:text-base text-[var(--foreground)] opacity-40 group-hover:text-[var(--accent)] group-hover:opacity-100 transition-colors">
-                      ({item.number})
-                    </span>
-
-                    <h3
-                      className={`text-2xl sm:text-4xl md:text-6xl font-bold uppercase tracking-tight transition-all duration-300 ${
-                        isOpen
-                          ? "text-[var(--accent)]"
-                          : "text-transparent text-stroke-sm group-hover:text-[var(--foreground)] group-hover:text-stroke-0"
-                      }`}
-                    >
-                      {item.title}
-                    </h3>
-                  </div>
-
-                  <div className="flex items-center gap-4">
-                    <span className="hidden lg:block font-mono text-xs text-[var(--foreground)] opacity-40">
-                      {item.subtitle}
-                    </span>
-                    <motion.div
-                      animate={{ rotate: isOpen ? 45 : 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="w-10 h-10 rounded-full border border-[var(--card-border)] flex items-center justify-center text-[var(--foreground)] group-hover:border-[var(--accent)] group-hover:text-[var(--accent)] transition-colors"
-                    >
-                      <ArrowUpRight className="w-4 h-4" />
-                    </motion.div>
-                  </div>
-                </div>
-
-                {/* Collapsible content */}
-                <AnimatePresence>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                      className="overflow-hidden"
-                    >
-                      <div className="pt-6 pb-4 pl-4 sm:pl-8 md:pl-20 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                        <div className="lg:col-span-6 space-y-4">
-                          <p className="text-sm md:text-base text-[var(--foreground)] opacity-80 leading-relaxed font-sans">
-                            {item.description}
-                          </p>
-                          <div className="flex flex-wrap gap-2 pt-2">
-                            {item.skills.map((s) => (
-                              <span
-                                key={s}
-                                className="px-2.5 py-1 rounded bg-[var(--secondary)] text-[var(--accent)] font-mono text-[11px] uppercase tracking-wider border border-[var(--card-border)]"
-                              >
-                                {s}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-
-                        <div className="lg:col-span-6">
-                          {item.id === "web" && <FullStackServiceThumbnail />}
-                          {item.id === "bots" && <PythonBotsServiceThumbnail />}
-                          {item.id === "database" && <DatabaseServiceThumbnail />}
-                          {item.id === "api" && <APIServiceThumbnail />}
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+              <div className="flex items-center gap-4">
+                <span className="font-mono text-xs text-[var(--foreground)] opacity-40">
+                  {item.subtitle}
+                </span>
+                <a
+                  href={item.link}
+                  target={item.isExternal ? "_blank" : undefined}
+                  rel={item.isExternal ? "noopener noreferrer" : undefined}
+                  className="px-4 py-2 rounded-full border border-[var(--card-border)] bg-[var(--secondary)] text-[var(--accent)] font-mono text-xs uppercase tracking-wider font-bold hover:bg-[var(--accent)] hover:text-black transition-all flex items-center gap-1.5 shrink-0"
+                >
+                  <span>{item.linkText}</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
               </div>
             </div>
-          );
-        })}
+
+            {/* Content Split: Description on Left, Interactive Visual Mockup on Right */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center pt-8">
+              <div className="lg:col-span-5 space-y-5">
+                <p className="text-sm md:text-base text-[var(--foreground)] opacity-80 leading-relaxed font-sans">
+                  {item.description}
+                </p>
+
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {item.skills.map((s) => (
+                    <span
+                      key={s}
+                      className="px-3 py-1 rounded bg-[var(--secondary)] text-[var(--foreground)] opacity-80 group-hover:opacity-100 group-hover:text-[var(--accent)] font-mono text-xs uppercase tracking-wider border border-[var(--card-border)] transition-colors"
+                    >
+                      {s}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="pt-2">
+                  <a
+                    href={item.link}
+                    target={item.isExternal ? "_blank" : undefined}
+                    rel={item.isExternal ? "noopener noreferrer" : undefined}
+                    className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-[var(--accent)] hover:underline"
+                  >
+                    <span>Inspect capability details</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Directly visible Live Interactive Graphic Mockup */}
+              <div className="lg:col-span-7">
+                {item.id === "web" && <FullStackServiceThumbnail />}
+                {item.id === "bots" && <PythonBotsServiceThumbnail />}
+                {item.id === "database" && <DatabaseServiceThumbnail />}
+                {item.id === "api" && <APIServiceThumbnail />}
+              </div>
+            </div>
+          </motion.div>
+        ))}
       </div>
     </section>
   );
